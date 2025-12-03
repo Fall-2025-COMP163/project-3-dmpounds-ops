@@ -112,7 +112,6 @@ def save_character(character, save_directory="data/save_games"):
 
     return True
 
-
 def load_character(character_name, save_directory="data/save_games"):
     """
     Load character from save file
@@ -143,11 +142,11 @@ def load_character(character_name, save_directory="data/save_games"):
     data = {}
     try:
         for line in lines:
-            # If a weird line sneaks in, just ignore it instead of crashing
-            if ": " not in line:
+            # Accept lines like "KEY: value" or "KEY:" with no value
+            if ":" not in line:
                 continue
 
-            key, value = line.split(": ", 1)
+            key, value = line.split(":", 1)
             key = key.strip().upper()
             value = value.strip()
 
@@ -184,7 +183,6 @@ def load_character(character_name, save_directory="data/save_games"):
         raise InvalidSaveDataError("Invalid data in save file") from e
 
     return data
-
 
 def list_saved_characters(save_directory="data/save_games"):
     """
